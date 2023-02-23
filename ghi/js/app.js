@@ -36,8 +36,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     if (!response.ok) {
       // Figure out what to do when the response is bad
-      const alert = createAlert();
-      return alert;
+      const htmlError = createAlert();
+      const column = columns[0];
+      column.innerHTML += htmlError;
     } else {
       const data = await response.json();
 
