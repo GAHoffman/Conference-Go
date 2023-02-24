@@ -7,23 +7,23 @@
 // the entire DOM loading
 window.addEventListener('DOMContentLoaded', async () => {
 
-    const url = 'http://localhost:8000/api/states';
-    const stateResponse = await fetch(url);
+    const url = 'http://localhost:8000/api/conferences/';
+    const conferenceResponse = await fetch(url);
 
-    if (stateResponse.ok) {
-        const stateData = await stateResponse.json();
+    const selectTag = document.getElementById('conference');
 
-        const selectStateTag = document.getElementById('state');
+    if (conferenceResponse.ok) {
+        const conferenceData = await conferenceResponse.json();
 
-        for (let state of stateData.states) {
+        for (let conference of conferenceData.conferences) {
             const option = document.createElement('option');
-            option.value = state.abbreviation;
-            option.innerHTML = state.name;
-            selectStateTag.appendChild(option);
+            option.value = conference.id;
+            option.innerHTML = conference.name;
+            selectTag.appendChild(option);
         }
     }
 
-    const formTag = document.getElementById('create-location-form');
+    const formTag = document.getElementById('create-presentation-form');
     formTag.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -38,11 +38,12 @@ window.addEventListener('DOMContentLoaded', async () => {
                 'Content-Type': 'application/json',
             },
         };
-        const locationUrl = 'http://localhost:8000/api/locations/';
-        const locationResponse = await fetch(locationUrl, fetchConfig);
-        if (locationResponse.ok) {
+        const conferenceId = selectTag.options[selectTag.selectedIndex].value;
+        const presentationUrl = `http://localhost:8000/api/conferences/${conferenceId}/presentations/`;
+        const presentationResponse = await fetch(presentationUrl, fetchConfig);
+        if (presentationResponse.ok) {
             formTag.reset();
-            const newLocation = await locationResponse.json();
+            const newPresentation = await presentationResponse.json();
 
         }
     });
