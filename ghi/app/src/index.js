@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
@@ -22,7 +25,9 @@ async function loadAttendees() {
     const data = await response.json();
     root.render(
       <React.StrictMode>
-        <App attendees={data.attendees} />
+        <BrowserRouter>
+          <App attendees={data.attendees} />
+        </BrowserRouter>
       </React.StrictMode>
     );
   } else {

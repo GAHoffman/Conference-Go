@@ -2,10 +2,13 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Nav from './Nav';
+import MainPage from './MainPage';
 import AttendeesList from './AttendeesList';
 import LocationForm from './LocationForm';
 import ConferenceForm from './ConferenceForm';
 import AttendConferenceForm from './AttendConferenceForm';
+import PresentationForm from './PresentationForm';
+import { Route, Routes } from 'react-router-dom';
 
 
 function App(props) {
@@ -15,12 +18,14 @@ function App(props) {
   return (
     <>
       <Nav />
-      <div className="container">
-        <AttendConferenceForm />
-        {/* <ConferenceForm /> */}
-        {/* <LocationForm /> */}
-        {/* <AttendeesList attendees={props.attendees} /> */}
-      </div>
+      <Routes>
+        <Route index element={<MainPage />} />
+        <Route path="conferences/new" element={<ConferenceForm />} />
+        <Route path="attendees/new" element={<AttendConferenceForm />} />
+        <Route path="locations/new" element={<LocationForm />} />
+        <Route path="presentations/new" element={<PresentationForm />} />
+        <Route path="attendees" element={<AttendeesList attendees={props.attendees} />} />
+      </Routes>
     </>
   );
 }
